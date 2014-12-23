@@ -4,8 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var uristring = process.env.MONGOLAB_URL;
+
+mongoose.connect(uristring, function(err, res) {
+    if(err)
+        console.log('ERROR connecting to: ' + uristring + '. ' + err);
+    else
+        console.log('SUCCESS connected to: ' + uristring);
+});
 
 
 var routes = require('./routes/index');
@@ -24,6 +33,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res, next){
+    req.mongoose = mongoose;
+    next();
+});
 
 app.use('/', routes);
 app.use('/users', users);
