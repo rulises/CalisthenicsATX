@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Required for Passport
 app.use(session({ secret: 'ulisesisgreat'}));
 app.use(passport.initialize());
-app.use(passport.session()));
+app.use(passport.session());
 app.use(flash());
 
 var routes = require('./routes/index.js')(app,passport);
