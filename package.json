@@ -12,8 +12,15 @@
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0",
     "debug": "~2.1.1",
-    "jade": "~1.8.2",
+    "ejs": "*",
     "mongodb": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "passport": "~0.1.17",
+    "passport-local": "0.1.6",
+    "passport-facebook": "~1.0.2",
+    "connect-flash": "~0.1.1",
+    "bcrypt-nodejs": "*",
+    "method-override": "~1.0.0",
+    "express-session": "~1.0.0"
   }
 }

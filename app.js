@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
@@ -16,15 +18,13 @@ mongoose.connect(uristring, function(err, res) {
         console.log('SUCCESS connected to: ' + uristring);
 });
 
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
+require('./config/passport')(passport);
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -33,6 +33,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Required for Passport
+app.use(session({ secret: 'ulisesisgreat'}));
+app.use(passport.initialize());
+app.use(passport.session()));
+app.use(flash());
+
+var routes = require('./routes/index.js')(app,passport);
+//var routes = require('./routes/index');
+var users = require('./routes/users');
 
 app.use(function(req, res, next){
     req.mongoose = mongoose;
