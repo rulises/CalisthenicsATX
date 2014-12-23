@@ -11,10 +11,12 @@ router.get('/', function(req, res) {
 /* GET Userlist page. */
 router.get('/userlist', function(req, res) {
         var mongoose = req.mongoose;
-        mongoose.model('Person',
+        var persons = mongoose.model('Person',
                         new Schema({username: String, email:String}),
                         'people');
-        var collection = mongoose.get();
+        persons.find({},{}, function(e, docs){
+            res.render('userlist' { "userlist" : docs });   
+        });
 });
 
 module.exports = router;
