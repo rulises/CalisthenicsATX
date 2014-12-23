@@ -15,7 +15,7 @@ router.get('/userlist', function(req, res) {
                         new Schema({username: String, email:String}),
                         'people');
         persons.find({},{}, function(e, docs){
-            res.render('userlist' { "userlist" : docs });   
+            res.render('userlist', { "userlist" : docs });   
         });
 });
 
