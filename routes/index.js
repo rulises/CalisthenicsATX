@@ -48,7 +48,7 @@ app.get('/userlist', function(req, res) {
 };
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticared())
+    if (req.isAuthenticated())
         return next();
     res.redirect('/');
 }
