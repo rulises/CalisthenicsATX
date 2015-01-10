@@ -31,15 +31,12 @@ app.post('/signup', passport.authenticate('local-signup', {
     failureFlash : true // allow flash messages
 }));
 /* PROFILE */
-app.get('/profile',isLoggedIn, function(req, res){
-    res.render('profile.ejs', { user:req.user });    
+app.get('/profile', isLoggedIn, function(req, res) {
+    res.render('profile.ejs', {
+        user : req.user // get the user out of session and pass to template
+    });
 });
 
-/* LOGOUT */
-app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/');    
-});
 
 // =====================================
 // FACEBOOK ROUTES =====================
@@ -53,6 +50,36 @@ app.get('/auth/facebook/callback',
         successRedirect : '/profile',
         failureRedirect : '/'
     }));
+
+// locally --------------------------------
+app.get('/connect/local', function(req, res) {
+    res.render('connect-local.ejs', { message: req.flash('loginMessage') });
+});
+app.post('/connect/local', passport.authenticate('local-signup', {
+    successRedirect : '/profile', // redirect to the secure profile section
+    failureRedirect : '/connect/local', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}));
+
+// facebook -------------------------------
+
+// send to facebook to do the authentication
+app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
+
+// handle the callback after facebook has authorized the user
+app.get('/connect/facebook/callback',
+    passport.authorize('facebook', {
+        successRedirect : '/profile',
+        failureRedirect : '/'
+    }));
+
+
+/* LOGOUT */
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');    
+});
+
 };
 
 
