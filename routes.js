@@ -32,9 +32,7 @@ app.post('/signup', passport.authenticate('local-signup', {
 }));
 /* PROFILE */
 app.get('/profile',isLoggedIn, function(req, res){
-    res.render('profile.ejs', { 
-        user:req.user 
-    });    
+    res.render('profile.ejs', { user:req.user });    
 });
 
 /* LOGOUT */
