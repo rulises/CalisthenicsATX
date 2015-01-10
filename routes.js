@@ -53,15 +53,8 @@ app.get('/auth/facebook/callback',
         successRedirect : '/profile',
         failureRedirect : '/'
     }));
-// route for logging out
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });
-
 };
 
-};
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
