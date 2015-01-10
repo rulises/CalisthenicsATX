@@ -48,7 +48,7 @@ app.use(function(req, res, next){
 });
 
 
-var routes = require('./routes/index.js')(app,passport);
+var routes = require('./routes.js')(app,passport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
